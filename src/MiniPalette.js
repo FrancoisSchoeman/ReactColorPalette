@@ -43,7 +43,7 @@ export default function MiniPalette(props){
             <NavLink to={`/palette/${props.palette.id}`}>
             <div className={classes.miniPalette}>
                 {props.palette.colors.map((color) => {
-                    return <div className={classes.colorBox} style={{backgroundColor: color.color}}></div>
+                    return <div key={color.color} className={classes.colorBox} style={{backgroundColor: color.color}}></div>
                 })}
             </div>
             <h5 className={classes.title}>{props.palette.paletteName}

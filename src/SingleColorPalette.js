@@ -7,8 +7,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import "./SingleColorPalette.css"
 
 export default function SingleColorPalette(props) {
-
-    const [shade, setShade] = useState(500);
     const [format, setFormat] = useState("hex");
 
     const params = useParams();
@@ -27,12 +25,11 @@ export default function SingleColorPalette(props) {
     const finalColors = colorShades.map((color) => {
         return color.map((singleColor) => {
             if(singleColor.id === paletteColor){
-                if(singleColor.name !== `${paletteColor} 50`){
-                    return <ColorBox isSingleColor={true} key={singleColor.name} color={singleColor.hex} name={singleColor.name} />
-                }
+                    return <ColorBox isSingleColor={true} key={singleColor.name} id={singleColor.name} color={singleColor[format]} name={singleColor.name} />
             }
+            return null;
         })
-    })
+    }).slice(1);
 
     let navigate = useNavigate(-1);
 
@@ -40,16 +37,20 @@ export default function SingleColorPalette(props) {
         navigate(-1);
     }
 
+    function changeFormat(value){
+        setFormat(value);
+    }
+
     return (
         <div className='SingleColorPalette'>
-            <Navbar isSingleColor={true} />
+            <Navbar handleChange={changeFormat} isSingleColor={true} shade={null} setShade={null} />
             <div className='SingleColorPalette-colors'>
                 { finalColors }
-                <div className='go-back'><button onClick={handleClick}>GO BACK</button></div>
+                <div className='go-back SingleColorBox'><button className='back-button' onClick={handleClick}>GO BACK</button></div>
             </div>
             <footer className='SingleColorPalette-footer'>
-                {palette.paletteName}
-                <span className='emoji'>{SingleColorPalette.emoji}</span>
+                {chosenPalette.paletteName}
+                <span className='emoji'>{chosenPalette.emoji}</span>
             </footer>
         </div>
     )

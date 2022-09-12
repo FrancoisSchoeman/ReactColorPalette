@@ -1,22 +1,22 @@
-.ColorBox{
+/* .ColorBox{
     width: 20%;
     height: 25%;
     margin: auto;
     display: inline-block;
     position: relative;
     margin-bottom: -3.5px;
-}
+} */
 
-.SingleColorBox{
+/* .SingleColorBox{
     width: 20%;
-    height: 40%;
+    height: 50%;
     margin: auto;
     display: inline-block;
     position: relative;
     margin-bottom: -3.5px;
-}
+} */
 
-.copy-button{
+/* .copy-button, .back-button{
     width: 100px;
     height: 30px;
     position: absolute;
@@ -30,37 +30,37 @@
     background-color: rgba(255, 255, 255, 0.3);
     font-size: 1rem;
     line-height: 30px;
-    color: white;
     text-transform: uppercase;
     border: none;
-    opacity: 0;
 }
 
-.ColorBox:hover .copy-button{
+.copy-button{
+    opacity: 0;
+} */
+
+/* .ColorBox:hover .copy-button, .SingleColorBox:hover .copy-button{
     opacity: 1;
     cursor: pointer;
     transition: 0.5s;
-}
+} */
 
-.box-content{
+/* .box-content{
     position: absolute;
     padding: 10px;
     width: 100%;
     left: 0px;
     bottom: 0px;
-    color: black;
     letter-spacing: 1px;
     text-transform: uppercase;
     font-size: 12px;
-}
+} */
 
-.see-more{
+/* .see-more{
     background-color: rgba(255, 255, 255, 0.3);
     position: absolute;
     border: none;
     right: 0;
     bottom: 0;
-    color: white;
     width: 60px;
     height: 30px;
     text-align: center;
@@ -68,9 +68,9 @@
     text-transform: uppercase;
     cursor: pointer;
     font-size: 12px;
-}
+} */
 
-.copy-overlay {
+/* .copy-overlay {
     opacity: 0;
     z-index: 0;
     width: 100%;
@@ -84,9 +84,9 @@
     transform: scale(50);
     z-index: 10;
     position: absolute;
-}
+} */
 
-.copy-msg{
+/* .copy-msg{
     position: fixed;
     left: 0;
     top: 0;
@@ -98,13 +98,12 @@
     font-size: 3rem;
     transform: scale(0.1);
     opacity: 0;
-    color: white;
     transition: all 0.4s ease-in-out;
     transition-delay: 0.1s;
     flex-direction: column;
-}
+} */
 
-.copy-msg.show{
+/* .copy-msg.show{
     opacity: 1;
     transform: scale(1);
     z-index: 11;
@@ -124,4 +123,4 @@
 .copy-msg p{
     font-weight: 100;
     font-size: 2rem;
-}
+} */

@@ -26,7 +26,7 @@ export default function Palette (props){
     })
     return(
         <div className='Palette'>
-            <Navbar handleChange={changeFormat} shade={shade} setShade={setShade} />
+            <Navbar handleChange={changeFormat} isSingleColor={false} shade={shade} setShade={setShade} />
             <div className='Palette-colors'>
                 {colorBoxes}
             </div>

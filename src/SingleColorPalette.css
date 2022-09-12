@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     align-content: space-between;
+    justify-content: center;
 }
 
 .SingleColorPalette-colors{
@@ -24,6 +25,5 @@
 }
 
 .go-back{
-    background-color: red;
-    display: inline-block;
+    background-color: black;
 }
