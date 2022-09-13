@@ -24,7 +24,11 @@ const useStyles = createUseStyles({
         display: "flex",
         justifyContent: "space-between",
         width: "100%",
-        color: "white"
+        color: "white",
+        alignItems: "center",
+        '& a':{
+            color: "white"
+        }
     }
 })
 
