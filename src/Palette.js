@@ -1,10 +1,9 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import ColorBox from './ColorBox';
 import Navbar from './Navbar';
 import {generatePalette} from "./colorHelpers";
 import { useParams } from 'react-router-dom';
-
-import './Palette.css';
+import useStyles from './styles/PaletteStyles';
 
 export default function Palette (props){
 
@@ -24,15 +23,18 @@ export default function Palette (props){
     const colorBoxes = palette.colors[shade].map(color => {
         return <ColorBox isSingleColor={false} key={color.id} id={color.id} color={color[format]} name={color.name} />
     })
+
+    const classes = useStyles(props);
+
     return(
-        <div className='Palette'>
+        <div className={classes.palette}>
             <Navbar handleChange={changeFormat} isSingleColor={false} shade={shade} setShade={setShade} />
-            <div className='Palette-colors'>
+            <div className={classes.paletteColors}>
                 {colorBoxes}
             </div>
-            <footer className='Palette-footer'>
+            <footer className={classes.paletteFooter}>
                 {palette.paletteName}
-                <span className='emoji'>{palette.emoji}</span>
+                <span className={classes.emoji}>{palette.emoji}</span>
             </footer>
         </div>
     )

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import "./PaletteList.css"
+import React from 'react';
+import "./PaletteList.css";
 import {createUseStyles} from 'react-jss';
 import MiniPalette from './MiniPalette';
 

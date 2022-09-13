@@ -1,10 +1,9 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import ColorBox from './ColorBox';
 import Navbar from './Navbar';
 import { generatePalette } from "./colorHelpers";
 import { useParams, useNavigate } from 'react-router-dom';
-
-import "./SingleColorPalette.css"
+import useStyles from "./styles/SingleColorPaletteStyles"
 
 export default function SingleColorPalette(props) {
     const [format, setFormat] = useState("hex");
@@ -41,16 +40,18 @@ export default function SingleColorPalette(props) {
         setFormat(value);
     }
 
+    const classes = useStyles(props);
+
     return (
-        <div className='SingleColorPalette'>
+        <div className={classes.singleColorPalette}>
             <Navbar handleChange={changeFormat} isSingleColor={true} shade={null} setShade={null} />
-            <div className='SingleColorPalette-colors'>
+            <div className={classes.singleColorPaletteColors}>
                 { finalColors }
-                <div className='go-back SingleColorBox'><button className='back-button' onClick={handleClick}>GO BACK</button></div>
+                <div className={`${classes.goBack} SingleColorBox`}><button className='back-button' onClick={handleClick}>GO BACK</button></div>
             </div>
-            <footer className='SingleColorPalette-footer'>
+            <footer className={classes.singleColorPaletteFooter}>
                 {chosenPalette.paletteName}
-                <span className='emoji'>{chosenPalette.emoji}</span>
+                <span className={classes.emoji}>{chosenPalette.emoji}</span>
             </footer>
         </div>
     )

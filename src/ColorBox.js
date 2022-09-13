@@ -1,5 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
-import './ColorBox.css';
+import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { NavLink } from 'react-router-dom';
 import useStyles from './styles/ColorBoxStyles';

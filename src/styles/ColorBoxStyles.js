@@ -21,7 +21,12 @@ const useStyles = createUseStyles({
         margin: "auto",
         display: "inline-block",
         position: "relative",
-        marginBottom: "-3.5px"
+        marginBottom: "-3.5px",
+        '&:hover $copyButton': {
+            opacity: "1",
+            cursor: "pointer",
+            transition: "0.5s",
+        }
     },
     generalButton: {
         width: "100px",
