@@ -3,7 +3,7 @@ import ColorBox from './ColorBox';
 import Navbar from './Navbar';
 import { generatePalette } from "./colorHelpers";
 import { useParams, useNavigate } from 'react-router-dom';
-import useStyles from "./styles/SingleColorPaletteStyles"
+import useStyles from "./styles/SingleColorPaletteStyles";
 
 export default function SingleColorPalette(props) {
     const [format, setFormat] = useState("hex");
@@ -47,7 +47,7 @@ export default function SingleColorPalette(props) {
             <Navbar handleChange={changeFormat} isSingleColor={true} shade={null} setShade={null} />
             <div className={classes.singleColorPaletteColors}>
                 { finalColors }
-                <div className={`${classes.goBack} SingleColorBox`}><button className='back-button' onClick={handleClick}>GO BACK</button></div>
+                <div className={`${classes.goBack} ${classes.singleColorBox}`}><button className={classes.generalButton} onClick={handleClick}>GO BACK</button></div>
             </div>
             <footer className={classes.singleColorPaletteFooter}>
                 {chosenPalette.paletteName}

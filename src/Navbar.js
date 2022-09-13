@@ -3,13 +3,11 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import SimpleSnackbar from './SimpleSnackbar';
 import { NavLink } from 'react-router-dom';
-
+import useStyles from './styles/NavbarStyles'
 
 // Slider
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-
-import "./Navbar.css";
 
 export default function Navbar(props){
 
@@ -22,18 +20,20 @@ export default function Navbar(props){
         setOpen(true);
     }
 
-    return (<header className='Navbar'>
-        <div className='logo'>
+    const classes = useStyles(props);
+
+    return (<header className={classes.navbar}>
+        <div className={classes.logo}>
             <NavLink to="/">ReactColorPicker</NavLink>
         </div>
-        {props.isSingleColor ? null : <div className='slider-container'>
+        {props.isSingleColor ? null : <div>
             <span>Level: {props.shade}</span>
-            <div className='slider'>
+            <div className={classes.slider}>
                 <Slider defaultValue={props.shade} min={100} max={900} step={100} onChange={(level) => props.setShade(level)} />
             </div>
         </div>}
         
-        <div className='select-container'>
+        <div className={classes.selectContainer}>
             <Select value={format} onChange={handleChange} label="Select">
                 <MenuItem value="hex">HEX - #FFFFFF</MenuItem>
                 <MenuItem value="rgb">RGB(255, 255, 255)</MenuItem>
