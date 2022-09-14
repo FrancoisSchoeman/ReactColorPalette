@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -9,6 +9,8 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
+import { ChromePicker } from 'react-color';
+import useStyles from './styles/NewPaletteFormStyles';
 
 const drawerWidth = 240;
 
@@ -58,7 +60,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function NewPaletteForm() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(true);
+  const [chosenColor, setChosenColor] = useState({hex: '#22194D'});
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -67,6 +70,12 @@ export default function NewPaletteForm() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleColorPickerChange= (color) => {
+    setChosenColor(color);
+  }
+
+  const classes = useStyles(chosenColor);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -110,6 +119,10 @@ export default function NewPaletteForm() {
         <Divider/>
 
         <h3>Color Picker Goes Here</h3>
+        <ChromePicker color={chosenColor['hex']} onChange={handleColorPickerChange} />
+        <button className={classes.addButton} >
+          Add Color
+        </button>
 
 
       </Drawer>
