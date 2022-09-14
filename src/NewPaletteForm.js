@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -11,13 +11,14 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import { ChromePicker } from 'react-color';
 import useStyles from './styles/NewPaletteFormStyles';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import DraggableColorBox from './DraggableColorBox';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -59,9 +60,33 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export default function NewPaletteForm() {
+export default function NewPaletteForm(props) {
   const [open, setOpen] = useState(true);
-  const [chosenColor, setChosenColor] = useState({hex: '#22194D'});
+  const [newPaletteName, SetNewPaletteName] = useState('');
+  const [newPaletteEmoji, setNewPaletteEmoji] = useState('');
+  const [chosenColor, setChosenColor] = useState({ hex: '#22194D' });
+  const [colorName, setColorName] = useState('');
+  const [colorBoxes, setColorBoxes] = useState(props.defaultPalette);
+  const [isSameColor, setIsSameColor] = useState(false)
+
+  const refContainer = useRef('form');
+
+  // useEffect(() => {
+  //   if (!ValidatorForm.hasValidationRule("nameExists")) {
+  //     ValidatorForm.addValidationRule('nameExists', (value) => {
+  //       if(colorBoxes.filter(colorBox => colorBox.name.toUpperCase() === value.toUpperCase().length > 0)){
+  //         return false
+  //       }
+  //       return true
+  //     });
+  //   }
+
+  //   return function cleanNameExistsRule() {
+  //     if (ValidatorForm.hasValidationRule("nameExists")) {
+  //       ValidatorForm.removeValidationRule("nameExists");
+  //     }
+  //   };
+  // });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -71,11 +96,41 @@ export default function NewPaletteForm() {
     setOpen(false);
   };
 
-  const handleColorPickerChange= (color) => {
+  const handleColorPickerChange = (color) => {
     setChosenColor(color);
+    if(colorBoxes.filter(colorBox => colorBox.color === color)){
+      setIsSameColor(true)
+    }
+    // TODO: fix isSameColor
+    console.log(isSameColor)
   }
 
-  const classes = useStyles(chosenColor);
+  const handleColorNameChange = (evt) => {
+    setColorName(evt.target.value.toUpperCase());
+  }
+
+  const handleColorPickerSubmit = () => {
+    setColorBoxes([...colorBoxes, { name: colorName, color: chosenColor['hex'] }])
+  }
+
+  const handleClearPalette = () => {
+    setColorBoxes([]);
+  }
+
+  const handleRandomColor =() => {
+    const randomColor = props.defaultPalette[Math.floor(Math.random() * props.defaultPalette.length)]
+    setColorBoxes([...colorBoxes, { name: randomColor.name, color: randomColor.color }])
+  }
+
+  const handleAddPaletteToSeedColors = () => {
+    const finalPaletteId = newPaletteName.toLowerCase().replaceAll(' ', '-');
+    const finalPalette = {paletteName: newPaletteName, id: finalPaletteId, emoji: newPaletteEmoji, colors: colorBoxes}
+    props.handleSetFinalSeedColors(finalPalette);
+  }
+
+  const classesProps = {chosenColor: chosenColor, isSameColor: isSameColor}
+
+  const classes = useStyles(classesProps);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -116,13 +171,32 @@ export default function NewPaletteForm() {
             <ArrowCircleLeftOutlinedIcon />
           </IconButton>
         </DrawerHeader>
-        <Divider/>
+        <Divider />
 
-        <h3>Color Picker Goes Here</h3>
-        <ChromePicker color={chosenColor['hex']} onChange={handleColorPickerChange} />
-        <button className={classes.addButton} >
-          Add Color
-        </button>
+        <div className={classes.drawer}>
+          <h2>Design Your Palette</h2>
+          <div className={classes.buttonBox}>
+            <button className={classes.clearButton} onClick={handleClearPalette}>Clear Palette</button>
+            <button className={classes.randomButton} onClick={handleRandomColor}>Random Color</button>
+          </div>
+          <ValidatorForm ref={refContainer} onSubmit={handleColorPickerSubmit} onError={errors => console.log(errors)}>
+            <ChromePicker width="280px" color={chosenColor['hex']} onChange={handleColorPickerChange} />
+            <TextValidator
+              className={classes.colorNameField}
+              name="colorName"
+              label="Color Name"
+              variant="filled"
+              value={colorName}
+              validators={["required"]}
+              errorMessages={['This field is required']}
+              onChange={handleColorNameChange}
+            />
+            <button type='submit' className={classes.addButton} >
+              Add Color
+            </button>
+          </ValidatorForm>
+        </div>
+
 
 
       </Drawer>
@@ -131,7 +205,12 @@ export default function NewPaletteForm() {
         <DrawerHeader />
 
 
-        <div>New Colors From Palette Goes Here</div>
+        <div className={classes.colorBoxes}>
+          {colorBoxes.map((colorBox) => {
+            return <DraggableColorBox key={colorBox.name} colorName={colorBox.name} color={colorBox.color} />
+          })}
+        </div>
+
 
 
       </Main>
