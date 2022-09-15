@@ -13,6 +13,8 @@ import { ChromePicker } from 'react-color';
 import useStyles from './styles/NewPaletteFormStyles';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import DraggableColorBox from './DraggableColorBox';
+import { useNavigate } from 'react-router-dom';
+import SavePaletteModal from './SavePaletteModal';
 
 const drawerWidth = 300;
 
@@ -62,8 +64,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function NewPaletteForm(props) {
   const [open, setOpen] = useState(true);
-  const [newPaletteName, SetNewPaletteName] = useState('');
-  const [newPaletteEmoji, setNewPaletteEmoji] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [chosenColor, setChosenColor] = useState({ hex: '#22194D' });
   const [colorName, setColorName] = useState('');
   const [colorBoxes, setColorBoxes] = useState(props.defaultPalette);
@@ -71,22 +72,26 @@ export default function NewPaletteForm(props) {
 
   const refContainer = useRef('form');
 
-  // useEffect(() => {
-  //   if (!ValidatorForm.hasValidationRule("nameExists")) {
-  //     ValidatorForm.addValidationRule('nameExists', (value) => {
-  //       if(colorBoxes.filter(colorBox => colorBox.name.toUpperCase() === value.toUpperCase().length > 0)){
-  //         return false
-  //       }
-  //       return true
-  //     });
-  //   }
+  const navigate = useNavigate();
 
-  //   return function cleanNameExistsRule() {
-  //     if (ValidatorForm.hasValidationRule("nameExists")) {
-  //       ValidatorForm.removeValidationRule("nameExists");
-  //     }
-  //   };
-  // });
+  const savePaletteToSeedColors = (paletteName, paletteEmoji) => {
+    const finalPaletteId = paletteName.toLowerCase().replaceAll(' ', '-');
+    const finalPalette = { paletteName: paletteName, id: finalPaletteId, emoji: paletteEmoji, colors: colorBoxes }
+    props.handleSetFinalSeedColors(finalPalette);
+    navigate(-1);
+  }
+
+  const handleGoBackClick = () => {
+    navigate(-1)
+  }
+
+  const handleSavePalette = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -98,11 +103,11 @@ export default function NewPaletteForm(props) {
 
   const handleColorPickerChange = (color) => {
     setChosenColor(color);
-    if(colorBoxes.filter(colorBox => colorBox.color === color)){
-      setIsSameColor(true)
-    }
+    // if(colorBoxes.filter(colorBox => colorBox.color === color)){
+    //   setIsSameColor(true)
+    // }
     // TODO: fix isSameColor
-    console.log(isSameColor)
+    // console.log(isSameColor)
   }
 
   const handleColorNameChange = (evt) => {
@@ -117,18 +122,12 @@ export default function NewPaletteForm(props) {
     setColorBoxes([]);
   }
 
-  const handleRandomColor =() => {
+  const handleRandomColor = () => {
     const randomColor = props.defaultPalette[Math.floor(Math.random() * props.defaultPalette.length)]
     setColorBoxes([...colorBoxes, { name: randomColor.name, color: randomColor.color }])
   }
 
-  const handleAddPaletteToSeedColors = () => {
-    const finalPaletteId = newPaletteName.toLowerCase().replaceAll(' ', '-');
-    const finalPalette = {paletteName: newPaletteName, id: finalPaletteId, emoji: newPaletteEmoji, colors: colorBoxes}
-    props.handleSetFinalSeedColors(finalPalette);
-  }
-
-  const classesProps = {chosenColor: chosenColor, isSameColor: isSameColor}
+  const classesProps = { chosenColor: chosenColor, isSameColor: isSameColor }
 
   const classes = useStyles(classesProps);
 
@@ -147,9 +146,16 @@ export default function NewPaletteForm(props) {
             <ArrowCircleRightOutlinedIcon />
           </IconButton>
 
-          <h3>
-            New Color Palette
-          </h3>
+          <div className={classes.header}>
+            <h3>
+              New Color Palette
+            </h3>
+            <div>
+            <SavePaletteModal isOpen={isModalOpen} handleModalClose={handleModalClose} savePalette={savePaletteToSeedColors} />
+              <button onClick={handleGoBackClick} className={classes.goBackButton}>Go Back</button>
+              <button onClick={handleSavePalette} className={classes.saveButton}>Save Palette</button>
+            </div>
+          </div>
 
         </Toolbar>
       </AppBar>

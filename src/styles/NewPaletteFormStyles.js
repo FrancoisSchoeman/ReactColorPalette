@@ -62,7 +62,32 @@ const useStyles = createUseStyles({
         alignItems: "flex-start",
         alignContent: "flex-start",
         height: "calc(100vh - 66px)",
-    }
+    },
+    header: {
+        display: "flex",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    saveButton:{
+        backgroundColor: "#3547ab",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        padding: "10px 20px",
+        textTransform: "uppercase",
+        fontSize: "0.75rem"
+    },
+    goBackButton:{
+        backgroundColor: "#f20149",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        padding: "10px 20px",
+        textTransform: "uppercase",
+        fontSize: "0.75rem",
+        marginRight: "1rem"
+    },
 })
 
 export default useStyles;
