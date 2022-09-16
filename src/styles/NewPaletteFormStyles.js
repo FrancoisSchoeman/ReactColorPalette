@@ -55,6 +55,18 @@ const useStyles = createUseStyles({
         textTransform: "uppercase",
         cursor: "pointer"
     },
+    paletteFullButton: {
+        backgroundColor:"#606060",
+        color: "#383838",
+        border: "none",
+        width: "100%",
+        borderRadius: "5px",
+        padding: "1rem 20px",
+        marginTop: "1rem",
+        fontSize: "1.5rem",
+        textTransform: "uppercase",
+        cursor: "not-allowed"
+    },
     colorBoxes:{
         display: "flex",
         flexWrap: "wrap",
@@ -62,6 +74,7 @@ const useStyles = createUseStyles({
         alignItems: "flex-start",
         alignContent: "flex-start",
         height: "calc(100vh - 66px)",
+        overflow: "hidden"
     },
     header: {
         display: "flex",

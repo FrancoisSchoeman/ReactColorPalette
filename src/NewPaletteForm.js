@@ -16,6 +16,19 @@ import DraggableColorBox from './DraggableColorBox';
 import { useNavigate } from 'react-router-dom';
 import SavePaletteModal from './SavePaletteModal';
 
+import {
+  DndContext,
+  closestCenter,
+  MouseSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+} from '@dnd-kit/sortable';
+
+
 const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -68,7 +81,7 @@ export default function NewPaletteForm(props) {
   const [chosenColor, setChosenColor] = useState({ hex: '#22194D' });
   const [colorName, setColorName] = useState('');
   const [colorBoxes, setColorBoxes] = useState(props.defaultPalette);
-  const [isSameColor, setIsSameColor] = useState(false)
+  const [isSameColor, setIsSameColor] = useState(false);
 
   const refContainer = useRef('form');
 
@@ -123,8 +136,35 @@ export default function NewPaletteForm(props) {
   }
 
   const handleRandomColor = () => {
-    const randomColor = props.defaultPalette[Math.floor(Math.random() * props.defaultPalette.length)]
+    const allColors = props.seedColors.map(palette => palette.colors).flat();
+    var rand = Math.floor(Math.random() * allColors.length)
+    const randomColor = allColors[rand];
     setColorBoxes([...colorBoxes, { name: randomColor.name, color: randomColor.color }])
+  }
+
+  const deleteColorBox = (color) => {
+    const colorBoxToDelete = colorBoxes.find((colorBox) => colorBox.color === color);
+    const newColorBoxes = colorBoxes.filter((colorBox) => colorBox !== colorBoxToDelete);
+    setColorBoxes(newColorBoxes);
+  }
+
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: { distance: 10, },
+    })
+  );
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.color !== over.color) {
+      setColorBoxes((colorBox) => {
+        const oldIndex = colorBox.findIndex(colorBox => colorBox.color === active.color);
+        const newIndex = colorBox.findIndex(colorBox => colorBox.color === over.color);
+
+        return arrayMove(colorBox, oldIndex, newIndex);
+      });
+    }
   }
 
   const classesProps = { chosenColor: chosenColor, isSameColor: isSameColor }
@@ -151,7 +191,7 @@ export default function NewPaletteForm(props) {
               New Color Palette
             </h3>
             <div>
-            <SavePaletteModal isOpen={isModalOpen} handleModalClose={handleModalClose} savePalette={savePaletteToSeedColors} />
+              <SavePaletteModal isOpen={isModalOpen} handleModalClose={handleModalClose} savePalette={savePaletteToSeedColors} />
               <button onClick={handleGoBackClick} className={classes.goBackButton}>Go Back</button>
               <button onClick={handleSavePalette} className={classes.saveButton}>Save Palette</button>
             </div>
@@ -197,9 +237,14 @@ export default function NewPaletteForm(props) {
               errorMessages={['This field is required']}
               onChange={handleColorNameChange}
             />
-            <button type='submit' className={classes.addButton} >
-              Add Color
-            </button>
+            {colorBoxes.length === 20 ? <button disabled type='submit' className={classes.paletteFullButton} >
+              Palette Full
+            </button> :
+              <button type='submit' className={classes.addButton} >
+                Add Color
+              </button>
+            }
+
           </ValidatorForm>
         </div>
 
@@ -209,16 +254,17 @@ export default function NewPaletteForm(props) {
 
       <Main open={open}>
         <DrawerHeader />
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
+          
+          <div className={classes.colorBoxes}>
+            <SortableContext items={colorBoxes.map((colorBox) => colorBox.color)} >
+              {colorBoxes.map((colorBox) => {
+                return <DraggableColorBox key={colorBox.name} id={colorBox.color} deleteColorBox={deleteColorBox} colorName={colorBox.name} color={colorBox.color} />
+              })}
+            </SortableContext>
+          </div>
 
-
-        <div className={classes.colorBoxes}>
-          {colorBoxes.map((colorBox) => {
-            return <DraggableColorBox key={colorBox.name} colorName={colorBox.name} color={colorBox.color} />
-          })}
-        </div>
-
-
-
+        </DndContext>
       </Main>
     </Box>
   );
