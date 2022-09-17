@@ -13,6 +13,11 @@ const useStyles = createUseStyles({
             opacity: "1",
             cursor: "pointer",
             transition: "0.5s",
+        },
+        '@media (max-width: 720px)': {
+            height: "25%",
+            width: "100%",
+            overflow: "hidden"
         }
     },
     singleColorBox: {
@@ -26,6 +31,11 @@ const useStyles = createUseStyles({
             opacity: "1",
             cursor: "pointer",
             transition: "0.5s",
+        },
+        '@media (max-width: 720px)': {
+            width: "100%",
+            height: "25%",
+            overflow: "hidden"
         }
     },
     generalButton: {

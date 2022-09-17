@@ -3,22 +3,29 @@ import { createUseStyles } from "react-jss";
 const useStyles = createUseStyles({
     main:{
         backgroundColor: "blue",
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
-        alignItems: "flex-start"
+        alignItems: "flex-start",
     },
     container:{
         width: "50%",
         display: "flex",
         alignItems: "flex-start",
         flexDirection: "column",
+        '@media (max-width: 720px)':{
+            width: "80%"
+        }
     },
     palettes:{
         boxSizing: "border-box",
         width: "100%",
-        display: "grid",
-        gridTemplateColumns: "auto auto auto",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        alignContent: "center",
+        flexWrap: "wrap",
+        flex: 1
     },
     nav: {
         display: "flex",

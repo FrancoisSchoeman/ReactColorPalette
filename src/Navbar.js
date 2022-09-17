@@ -26,7 +26,7 @@ export default function Navbar(props){
         <div className={classes.logo}>
             <NavLink to="/">ReactColorPicker</NavLink>
         </div>
-        {props.isSingleColor ? null : <div>
+        {props.isSingleColor ? null : <div className={classes.sliderContainer}>
             <span>Level: {props.shade}</span>
             <div className={classes.slider}>
                 <Slider defaultValue={props.shade} min={100} max={900} step={100} onChange={(level) => props.setShade(level)} />

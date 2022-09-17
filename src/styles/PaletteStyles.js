@@ -2,12 +2,16 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
  palette:{
-    height: "100vh",
+    height: "97vh",
     display: "flex",
     flexDirection: "column"
  },
  paletteColors:{
-    height: "90%"
+    height: "90%",
+    marginTop: '3.5px',
+    "@media (max-width: 720px)":{
+      flexWrap: "wrap"
+    }
  },
  paletteFooter:{
     backgroundColor: "white",
@@ -19,7 +23,7 @@ const useStyles = createUseStyles({
  },
  emoji:{
     fontSize: "1.5rem",
-    margin: "0 1rem"
+    padding: "0 1rem"
  }
 })
 

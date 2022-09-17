@@ -32,7 +32,11 @@ const useStyles = createUseStyles({
         margin: "auto",
         display: "inline-block",
         position: "relative",
-        marginBottom: "-3.5px"
+        marginBottom: "-3.5px",
+        '@media (max-width: 720px)':{
+            width: "100%",
+            height: "25%"
+        }
     },
     generalButton: {
         width: "100px",

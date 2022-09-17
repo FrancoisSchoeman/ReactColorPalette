@@ -5,7 +5,9 @@ const useStyles = createUseStyles({
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
-        height: "6vh"
+        alignContent: "center",
+        height: "6vh",
+        overflow: "hidden"
     },
     logo:{
         marginRight: "15px",
@@ -21,10 +23,16 @@ const useStyles = createUseStyles({
             color: "black"
         }
     },
+    sliderContainer: {
+        width: "100%"
+    },
     slider:{
-        width: "340px",
+        width: "80%",
         margin: "0 10px",
         display: "inline-block",
+        '@media (max-width: 720px)':{
+
+        },
         '& .rc-slider-track':{
             backgroundColor: "transparent"
         },
