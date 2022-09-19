@@ -8,10 +8,21 @@ import { useState } from "react";
 
 function App() {
 
-  const [finalSeedColors, setFinalSeedColors] = useState(seedColors);
+  const getSeedColorsFromLocalStorage = () => {
+    try{
+      const jsonSeedColors = window.localStorage.getItem('seedColors');
+      return jsonSeedColors ? JSON.parse(jsonSeedColors): seedColors;
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
+
+  const [finalSeedColors, setFinalSeedColors] = useState(getSeedColorsFromLocalStorage());
 
   const handleSetFinalSeedColors = (palette) => {
-    setFinalSeedColors([...finalSeedColors, palette])
+    setFinalSeedColors([...finalSeedColors, palette]);
+    window.localStorage.setItem('seedColors', JSON.stringify([...finalSeedColors, palette]))
   }
 
   return (

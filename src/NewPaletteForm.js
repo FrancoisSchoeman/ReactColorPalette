@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -15,6 +13,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import DraggableColorBox from './DraggableColorBox';
 import { useNavigate } from 'react-router-dom';
 import SavePaletteModal from './SavePaletteModal';
+import { Main, AppBar, DrawerHeader } from './NewPaletteFormStyledComponents';
 
 import {
   DndContext,
@@ -28,52 +27,7 @@ import {
   SortableContext,
 } from '@dnd-kit/sortable';
 
-
 const drawerWidth = 300;
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }),
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
 
 export default function NewPaletteForm(props) {
   const [open, setOpen] = useState(true);
@@ -115,12 +69,12 @@ export default function NewPaletteForm(props) {
   };
 
   const handleColorPickerChange = (color) => {
-    setChosenColor(color);
+  setChosenColor(color);
     // if(colorBoxes.filter(colorBox => colorBox.color === color)){
-    //   setIsSameColor(true)
-    // }
-    // TODO: fix isSameColor
-    // console.log(isSameColor)
+      //   setIsSameColor(true)
+      // }
+      // TODO: fix isSameColor
+      // console.log(isSameColor)
   }
 
   const handleColorNameChange = (evt) => {
@@ -217,6 +171,7 @@ export default function NewPaletteForm(props) {
             <ArrowCircleLeftOutlinedIcon />
           </IconButton>
         </DrawerHeader>
+        
         <Divider />
 
         <div className={classes.drawer}>
@@ -247,9 +202,6 @@ export default function NewPaletteForm(props) {
 
           </ValidatorForm>
         </div>
-
-
-
       </Drawer>
 
       <Main open={open}>
