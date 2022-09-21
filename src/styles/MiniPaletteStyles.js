@@ -30,6 +30,15 @@ const useStyles = createUseStyles({
     emoji:{
         marginLeft: "7px",
         fontSize: "1rem"
+    },
+    deleteButton: {
+        position: "relative",
+        top: "0",
+        right: "0",
+        backgroundColor: "red",
+        color: "white",
+        padding: "6px 4px 1px 4px",
+        overflow: "hidden"
     }
 })
 

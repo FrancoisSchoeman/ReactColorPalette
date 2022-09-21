@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
-import useStyles from "./styles/MiniPaletteStyles"
+import useStyles from "./styles/MiniPaletteStyles";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 export default function MiniPalette(props){
     const classes = useStyles(props);
@@ -15,6 +16,7 @@ export default function MiniPalette(props){
             </div>
             <h5 className={classes.title}>{props.palette.paletteName}
             <span className={classes.emoji}>{props.palette.emoji}</span></h5></NavLink>
+            <span className={classes.deleteButton} ><DeleteRoundedIcon fontSize="small" /></span>
         </div>
     )
 }
