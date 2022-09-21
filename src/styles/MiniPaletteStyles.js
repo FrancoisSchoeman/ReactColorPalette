@@ -8,6 +8,8 @@ const useStyles = createUseStyles({
         padding: "7px",
         width: "10rem",
         alignSelf: "stretch",
+        position: "relative",
+        overflow: "hidden"
     },
     miniPalette:{
         display: "flex",
@@ -32,13 +34,30 @@ const useStyles = createUseStyles({
         fontSize: "1rem"
     },
     deleteButton: {
-        position: "relative",
+        position: "absolute",
         top: "0",
         right: "0",
         backgroundColor: "red",
         color: "white",
         padding: "6px 4px 1px 4px",
-        overflow: "hidden"
+        opacity: "0",
+        transition: "0.3s ease-in-out",
+        "&:hover":{
+            opacity: "1",
+            cursor: "pointer"
+        }
+    },
+    dialogBox: {
+        padding: "0 1.5rem 1.5rem 1.5rem",
+        margin: "auto",
+        textAlign: "center"
+    },
+    dialogButtons:{
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        marginTop: "1.5rem",
+        gap: "0.5rem"
     }
 })
 

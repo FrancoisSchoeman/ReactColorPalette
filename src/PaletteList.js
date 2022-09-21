@@ -13,7 +13,7 @@ export default function PaletteList(props){
                     <NavLink to="palette/new">Create Palette</NavLink>
                 </nav>
                 <div className={classes.palettes}>
-                    {props.seedColors.map(palette => {return <MiniPalette key={palette.id} palette={palette}/>})}
+                    {props.seedColors.map(palette => {return <MiniPalette key={palette.id} paletteId={palette.id} palette={palette} deleteMiniPalette={props.deleteMiniPalette}/>})}
                 </div>
             </div>
         </div>
