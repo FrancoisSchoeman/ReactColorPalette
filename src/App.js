@@ -5,6 +5,8 @@ import {Routes, Route} from "react-router-dom";
 import SingleColorPalette from "./SingleColorPalette";
 import NewPaletteForm from "./NewPaletteForm";
 import { useState } from "react";
+import { CSSTransition, TransitionGroup, } from 'react-transition-group';
+
 
 function App() {
 

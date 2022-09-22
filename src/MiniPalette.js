@@ -21,6 +21,7 @@ export default function MiniPalette(props) {
     const handleConfirmDelete = () => {
         setIsDialogOpen(false);
         props.deleteMiniPalette(props.paletteId);
+        props.setInProp(true);
     }
 
     const handleCancelDelete = () => {
