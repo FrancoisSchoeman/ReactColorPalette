@@ -38,10 +38,7 @@ export default function MiniPalette(props) {
                 </div>
                 <h5 className={classes.title}>{props.palette.paletteName}
                     <span className={classes.emoji}>{props.palette.emoji}</span></h5></NavLink>
-
-            {props.palette.id !== "material-ui-colors" ?
-                <span onClick={handleMiniPaletteDelete} className={classes.deleteButton} ><DeleteRoundedIcon fontSize="small" /></span>
-                : null}
+                    <span onClick={handleMiniPaletteDelete} className={classes.deleteButton} ><DeleteRoundedIcon fontSize="small" /></span>
             <Dialog open={isDialogOpen}>
                 <div className={classes.dialogBox}>
                     <DialogTitle>Delete Palette</DialogTitle>

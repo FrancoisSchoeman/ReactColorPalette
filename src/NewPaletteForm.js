@@ -13,6 +13,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import DraggableColorBox from './DraggableColorBox';
 import { useNavigate } from 'react-router-dom';
 import SavePaletteModal from './SavePaletteModal';
+import seedColors from './seedColors';
 import { Main, AppBar, DrawerHeader } from './NewPaletteFormStyledComponents';
 
 import {
@@ -34,7 +35,7 @@ export default function NewPaletteForm(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chosenColor, setChosenColor] = useState({ hex: '#22194D' });
   const [colorName, setColorName] = useState('');
-  const [colorBoxes, setColorBoxes] = useState(props.defaultPalette);
+  const [colorBoxes, setColorBoxes] = useState(seedColors[0].colors);
   const [isSameColor, setIsSameColor] = useState(false);
 
   const refContainer = useRef('form');
